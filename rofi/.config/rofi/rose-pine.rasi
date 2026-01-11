@@ -1,0 +1,113 @@
+/**
+ * Rose Pine Rofi Theme
+ * Based on the official Rose Pine color palette
+ * https://rosepinetheme.com/
+ */
+
+* {
+    /* Font */
+    font: "JetBrains Mono 10";
+
+    /* Rose Pine color palette */
+    rose-base:     #191724;
+    rose-surface:  #1f1d2e;
+    rose-overlay:  #26233a;
+    rose-muted:    #6e6a86;
+    rose-subtle:   #908caa;
+    rose-text:     #ebbcba;
+    rose-love:     #eb6f92;
+    rose-gold:     #f6c177;
+    rose-pine:     #31748f;
+    rose-foam:     #9ccfd8;
+    rose-iris:     #c4a7e7;
+    rose-highlight-low:  #21202e;
+    rose-highlight-med:  #403d52;
+    rose-highlight-high: #524f67;
+
+    /* Theme settings */
+    background-color: @rose-base;
+    border-color:     @rose-surface;
+    text-color:       @rose-text;
+    
+    /* General */
+    background:       @rose-base;
+    foreground:       @rose-text;
+    selected-normal-background:   @rose-pine;
+    selected-normal-foreground:   @rose-text;
+    alternate-normal-background:  @rose-surface;
+    alternate-normal-foreground:  @rose-text;
+    urgent-background:            @rose-love;
+    urgent-foreground:            @rose-base;
+}
+
+window {
+    background-color:   @rose-base;
+    border:             2px solid;
+    border-color:       @rose-surface;
+    border-radius:      8px;
+    padding:            10px;
+    width:              40%;
+}
+
+mainbox {
+    background-color:   @rose-base;
+    spacing:            10px;
+}
+
+inputbar {
+    background-color:   @rose-overlay;
+    padding:            10px;
+    spacing:            10px;
+    border-radius:      6px;
+}
+
+prompt {
+    text-color:         @rose-pine;
+    background-color:   transparent;
+}
+
+entry {
+    text-color:         @rose-text;
+    background-color:   transparent;
+    placeholder:        "Search...";
+    placeholder-color:  @rose-muted;
+}
+
+listview {
+    background-color:   @rose-base;
+    columns:            1;
+    lines:              8;
+    spacing:            5px;
+}
+
+element {
+    background-color:   transparent;
+    padding:            5px;
+    text-color:         @rose-subtle;
+}
+
+element selected.normal {
+    background-color:   @rose-pine;
+    text-color:         @rose-text;
+}
+
+element normal.normal {
+    background-color:   transparent;
+    text-color:         @rose-subtle;
+}
+
+element urgent {
+    background-color:   @rose-love;
+    text-color:         @rose-base;
+}
+
+scrollbar {
+    handle-color:       @rose-highlight-med;
+    handle-width:       8px;
+}
+
+/* Mode switcher */
+mode-switcher {
+    background-color:   @rose-surface;
+    text-color:         @rose-text;
+}
