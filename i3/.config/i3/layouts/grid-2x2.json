@@ -1,0 +1,19 @@
+{
+    "layout": "splith",
+    "nodes": [
+        {
+            "layout": "splitv",
+            "nodes": [
+                {"swallows": [{}]},
+                {"swallows": [{}]}
+            ]
+        },
+        {
+            "layout": "splitv",
+            "nodes": [
+                {"swallows": [{}]},
+                {"swallows": [{}]}
+            ]
+        }
+    ]
+}
