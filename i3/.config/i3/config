@@ -1,7 +1,25 @@
 set $mod Mod4
 
 # --- FONTS ---
-font pango:JetBrainsMono Nerd Font, Source Han Sans JP 10
+font pango:JetBrainsMono Nerd Font, Source Han Sans JP 9
+
+# --- APPEARANCE ---
+for_window [class=".*"] border pixel 1
+default_border pixel 1
+default_floating_border pixel 1
+
+# No gaps - windows touch each other
+gaps inner 0
+gaps outer 0
+
+# Rose Pine colors
+set $rose-pine-base      #191724
+set $rose-pine-text      #e0def4
+
+client.focused          $rose-pine-base     $rose-pine-base     $rose-pine-text     $rose-pine-base     $rose-pine-base
+client.focused_inactive $rose-pine-base     $rose-pine-base     $rose-pine-text     $rose-pine-base     $rose-pine-base
+client.unfocused        $rose-pine-base     $rose-pine-base     $rose-pine-text     $rose-pine-base     $rose-pine-base
+client.urgent           $rose-pine-base     $rose-pine-base     $rose-pine-text     $rose-pine-base     $rose-pine-base
 
 # --- APPS ---
 set $terminal ghostty
@@ -10,12 +28,11 @@ set $menu rofi -show drun -theme ~/.config/rofi/rose-pine.rasi
 
 # --- HARDWARE AUTOMATION ---
 exec --no-startup-id "sleep 2 && autorandr --change --default desk"
-
 exec_always --no-startup-id ~/.config/polybar/launch.sh
-
 exec_always --no-startup-id xrdb -load ~/.Xresources
-
 exec_always --no-startup-id xsetroot -cursor_name left_ptr
+exec --no-startup-id rfkill unblock bluetooth
+exec_always --no-startup-id autotiling
 
 # --- DAEMONS ---
 exec --no-startup-id nm-applet
@@ -29,6 +46,11 @@ bindsym $mod+f exec $fileManager
 bindsym $mod+space exec $menu
 bindsym $mod+q kill
 bindsym $mod+u exec ~/bin/lock.sh
+bindsym $mod+n exec --no-startup-id networkmanager_dmenu
+
+# Float/unfloat window
+bindsym $mod+Shift+space floating toggle
+floating_modifier $mod
 
 # --- SCREENSHOTS (X11 Version) ---
 bindsym Print exec scrot '%Y-%m-%d-%s_screenshot.png' -e 'mv $f ~/Pictures/'
@@ -41,6 +63,10 @@ bindsym XF86AudioMute exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
 bindsym XF86AudioMicMute exec wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
 bindsym XF86MonBrightnessUp exec brightnessctl set +10%
 bindsym XF86MonBrightnessDown exec brightnessctl set 10%-
+bindsym $mod+Shift+a exec pavucontrol
+bindsym $mod+Shift+f exec ~/.config/i3/scripts/audio-switch.sh fifine
+bindsym $mod+Shift+b exec ~/.config/i3/scripts/audio-switch.sh airpods
+bindsym $mod+Shift+t exec ~/.config/i3/scripts/audio-switch.sh toggle
 
 # --- MOVEMENT (Vim Style) ---
 bindsym $mod+h focus left
@@ -91,3 +117,4 @@ mode "resize" {
     bindsym Escape mode "default"
 }
 bindsym $mod+r mode "resize"
+bindsym $mod+Shift+g exec --no-startup-id "i3-msg 'workspace 1; append_layout ~/.config/i3/layouts/grid-2x2.json'"
