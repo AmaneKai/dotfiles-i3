@@ -27,6 +27,10 @@ case "$1" in
         ;;
     airpods)
         if device_exists; then
+            # Force A2DP profile ON
+            pactl set-card-profile bluez_card.14_7A_E4_DD_CA_26 a2dp-sink 2>/dev/null
+            sleep 0.5
+            
             AIRPODS=$(get_airpods_sink)
             switch_audio "$AIRPODS"
             notify-send "オーディオ" "イヤホンに接続しました ♪(´▽｀)"
@@ -40,6 +44,10 @@ case "$1" in
         current=$(pactl get-default-sink)
         if [[ "$current" == *"FIFINE"* ]]; then
             if device_exists; then
+                # Force A2DP profile ON
+                pactl set-card-profile bluez_card.14_7A_E4_DD_CA_26 a2dp-sink 2>/dev/null
+                sleep 0.5
+                
                 AIRPODS=$(get_airpods_sink)
                 switch_audio "$AIRPODS"
                 notify-send "オーディオ" "イヤホンに接続しました ♪(´▽｀)"
