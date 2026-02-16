@@ -1,85 +1,150 @@
+# i3 Window Manager Configuration
+# Minimalist Rose Pine themed setup with audio switching
+# Author: Amane Kai / 雨音カイ
+# Last Modified: 2026-02-16
+
+# ============================================================================
+# CORE SETTINGS
+# ============================================================================
+
 set $mod Mod4
 
-# --- FONTS ---
+# Font Configuration
 font pango:JetBrainsMono Nerd Font, Source Han Sans JP 9
 
-# --- APPEARANCE ---
+# ============================================================================
+# APPEARANCE
+# ============================================================================
+
+# Window Borders (minimal, 1px)
 for_window [class=".*"] border pixel 1
 default_border pixel 1
 default_floating_border pixel 1
 
-# No gaps - windows touch each other
+# Gaps (disabled for edge-to-edge windows)
 gaps inner 0
 gaps outer 0
 
-# Rose Pine colors
-set $rose-pine-base      #191724
-set $rose-pine-text      #e0def4
+# Rose Pine Color Scheme
+set $rose-pine-base #191724
+set $rose-pine-text #e0def4
 
-client.focused          $rose-pine-base     $rose-pine-base     $rose-pine-text     $rose-pine-base     $rose-pine-base
-client.focused_inactive $rose-pine-base     $rose-pine-base     $rose-pine-text     $rose-pine-base     $rose-pine-base
-client.unfocused        $rose-pine-base     $rose-pine-base     $rose-pine-text     $rose-pine-base     $rose-pine-base
-client.urgent           $rose-pine-base     $rose-pine-base     $rose-pine-text     $rose-pine-base     $rose-pine-base
+# Window Colors (uniform dark borders)
+# class                 border              background          text
+# indicator           child_border
+client.focused          $rose-pine-base     $rose-pine-base     \
+$rose-pine-text     $rose-pine-base     $rose-pine-base
+client.focused_inactive $rose-pine-base     $rose-pine-base     \
+$rose-pine-text     $rose-pine-base     $rose-pine-base
+client.unfocused        $rose-pine-base     $rose-pine-base     \
+$rose-pine-text     $rose-pine-base     $rose-pine-base
+client.urgent           $rose-pine-base     $rose-pine-base     \
+$rose-pine-text     $rose-pine-base     $rose-pine-base
 
-# --- APPS ---
+# ============================================================================
+# APPLICATION DEFINITIONS
+# ============================================================================
+
 set $terminal ghostty
 set $fileManager pcmanfm
 set $menu rofi -show drun -theme ~/.config/rofi/rose-pine.rasi
 
-# --- HARDWARE AUTOMATION ---
+# ============================================================================
+# AUTOSTART APPLICATIONS
+# ============================================================================
+
+# Hardware Configuration
 exec --no-startup-id "sleep 2 && autorandr --change --default desk"
+exec --no-startup-id rfkill unblock bluetooth
+
+# Visual Elements
 exec_always --no-startup-id ~/.config/polybar/launch.sh
 exec_always --no-startup-id xrdb -load ~/.Xresources
 exec_always --no-startup-id xsetroot -cursor_name left_ptr
-exec --no-startup-id rfkill unblock bluetooth
 exec_always --no-startup-id autotiling
 
-# --- DAEMONS ---
+# System Daemons
 exec --no-startup-id nm-applet
 exec --no-startup-id dex --autostart --environment i3
 exec --no-startup-id dunst
-exec --no-startup-id xss-lock --transfer-sleep-lock -- ~/bin/lock.sh --nofork
+exec --no-startup-id xss-lock --transfer-sleep-lock -- \
+    ~/bin/lock.sh --nofork
 
-# --- KEYBINDINGS (General) ---
+# ============================================================================
+# KEYBINDINGS - GENERAL
+# ============================================================================
+
+# Application Launchers
 bindsym $mod+Return exec $terminal
 bindsym $mod+f exec $fileManager
 bindsym $mod+space exec $menu
-bindsym $mod+q kill
-bindsym $mod+u exec ~/bin/lock.sh
 bindsym $mod+n exec --no-startup-id networkmanager_dmenu
 
-# Float/unfloat window
+# Window Management
+bindsym $mod+q kill
 bindsym $mod+Shift+space floating toggle
 floating_modifier $mod
 
-# --- SCREENSHOTS (X11 Version) ---
-bindsym Print exec scrot '%Y-%m-%d-%s_screenshot.png' -e 'mv $f ~/Pictures/'
-bindsym $mod+Print exec scrot -s '%Y-%m-%d-%s_screenshot.png' -e 'mv $f ~/Pictures/'
+# System
+bindsym $mod+u exec ~/bin/lock.sh
 
-# --- AUDIO & BRIGHTNESS (Acer Swift Keys) ---
-bindsym XF86AudioRaiseVolume exec wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+
-bindsym XF86AudioLowerVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
-bindsym XF86AudioMute exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
-bindsym XF86AudioMicMute exec wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
+# ============================================================================
+# KEYBINDINGS - SCREENSHOTS
+# ============================================================================
+
+bindsym Print exec scrot '%Y-%m-%d-%s_screenshot.png' \
+    -e 'mv $f ~/Pictures/'
+bindsym $mod+Print exec scrot -s '%Y-%m-%d-%s_screenshot.png' \
+    -e 'mv $f ~/Pictures/'
+
+# ============================================================================
+# KEYBINDINGS - AUDIO & BRIGHTNESS
+# ============================================================================
+
+# Volume Control
+bindsym XF86AudioRaiseVolume exec \
+    wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+
+bindsym XF86AudioLowerVolume exec \
+    wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
+bindsym XF86AudioMute exec \
+    wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+bindsym XF86AudioMicMute exec \
+    wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
+
+# Brightness Control
 bindsym XF86MonBrightnessUp exec brightnessctl set +10%
 bindsym XF86MonBrightnessDown exec brightnessctl set 10%-
-bindsym $mod+Shift+a exec pavucontrol
-bindsym $mod+Shift+f exec ~/.config/i3/scripts/audio-switch.sh fifine
-bindsym $mod+Shift+b exec ~/.config/i3/scripts/audio-switch.sh airpods
-bindsym $mod+Shift+t exec ~/.config/i3/scripts/audio-switch.sh toggle
 
-# --- MOVEMENT (Vim Style) ---
+# Audio Device Switching
+bindsym $mod+Shift+a exec pavucontrol
+bindsym $mod+Shift+f exec \
+    ~/.config/i3/scripts/audio-switch.sh fifine
+bindsym $mod+Shift+b exec \
+    ~/.config/i3/scripts/audio-switch.sh airpods
+bindsym $mod+Shift+t exec \
+    ~/.config/i3/scripts/audio-switch.sh toggle
+
+# ============================================================================
+# KEYBINDINGS - WINDOW MOVEMENT (VIM STYLE)
+# ============================================================================
+
+# Focus
 bindsym $mod+h focus left
 bindsym $mod+j focus down
 bindsym $mod+k focus up
 bindsym $mod+l focus right
 
+# Move
 bindsym $mod+Shift+h move left
 bindsym $mod+Shift+j move down
 bindsym $mod+Shift+k move up
 bindsym $mod+Shift+l move right
 
-# --- WORKSPACES ---
+# ============================================================================
+# WORKSPACES
+# ============================================================================
+
+# Switch to Workspace
 bindsym $mod+1 workspace 1
 bindsym $mod+2 workspace 2
 bindsym $mod+3 workspace 3
@@ -91,6 +156,7 @@ bindsym $mod+8 workspace 8
 bindsym $mod+9 workspace 9
 bindsym $mod+0 workspace 10
 
+# Move Container to Workspace
 bindsym $mod+Shift+1 move container to workspace 1
 bindsym $mod+Shift+2 move container to workspace 2
 bindsym $mod+Shift+3 move container to workspace 3
@@ -102,12 +168,20 @@ bindsym $mod+Shift+8 move container to workspace 8
 bindsym $mod+Shift+9 move container to workspace 9
 bindsym $mod+Shift+0 move container to workspace 10
 
-# --- SYSTEM ---
+# ============================================================================
+# SYSTEM CONTROL
+# ============================================================================
+
 bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'Exit i3?' -B 'Yes' 'i3-msg exit'"
+bindsym $mod+Shift+e exec \
+    "i3-nagbar -t warning -m 'Exit i3?' -B 'Yes' 'i3-msg exit'"
 
-# --- MODES ---
+# ============================================================================
+# MODES
+# ============================================================================
+
+# Resize Mode
 mode "resize" {
     bindsym h resize shrink width 10 px or 10 ppt
     bindsym j resize grow height 10 px or 10 ppt
@@ -117,4 +191,14 @@ mode "resize" {
     bindsym Escape mode "default"
 }
 bindsym $mod+r mode "resize"
-bindsym $mod+Shift+g exec --no-startup-id "i3-msg 'workspace 1; append_layout ~/.config/i3/layouts/grid-2x2.json'"
+
+# ============================================================================
+# CUSTOM LAYOUTS
+# ============================================================================
+
+# 2x2 Grid Layout
+bindsym $mod+Shift+g exec --no-startup-id \
+    "i3-msg 'workspace 1; \
+    append_layout ~/.config/i3/layouts/grid-2x2.json'"
+
+# vim:ft=i3config
