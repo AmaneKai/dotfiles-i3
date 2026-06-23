@@ -110,10 +110,11 @@ bindsym XF86MonBrightnessUp exec brightnessctl set +10%
 bindsym XF86MonBrightnessDown exec brightnessctl set 10%-
 
 # Audio Device Switching
-bindsym $mod+Shift+a exec pavucontrol
+bindsym $mod+Shift+a exec --no-startup-id bash ~/.config/i3/scripts/audio-menu.sh
 bindsym $mod+Shift+f exec ~/.config/i3/scripts/audio-switch.sh fifine
-bindsym $mod+Shift+b exec ~/.config/i3/scripts/audio-switch.sh airpods
+bindsym $mod+Shift+d exec ~/.config/i3/scripts/audio-switch.sh airpods
 bindsym $mod+Shift+t exec ~/.config/i3/scripts/audio-switch.sh toggle
+bindsym $mod+Shift+b exec --no-startup-id bash ~/.config/i3/scripts/bluetooth-menu.sh
 
 # ============================================================================
 # KEYBINDINGS - WINDOW MOVEMENT (VIM STYLE)

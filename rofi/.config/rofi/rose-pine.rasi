@@ -1,12 +1,10 @@
 /**
- * Rose Pine Rofi Theme — Modern
- * Inspired by GitPeak's card-surface aesthetic
+ * Rose Pine Rofi — Circle Language Edition
  */
 
 * {
     font:              "JetBrainsMono Nerd Font 11";
 
-    /* Rose Pine palette */
     base:              #191724;
     surface:           #1f1d2e;
     overlay:           #26233a;
@@ -15,31 +13,24 @@
     text:              #e0def4;
     love:              #eb6f92;
     gold:              #f6c177;
-    pine:              #31748f;
     foam:              #9ccfd8;
     iris:              #c4a7e7;
-    highlight-low:     #21202e;
     highlight-med:     #403d52;
-    highlight-high:    #524f67;
 
     background-color:  transparent;
     text-color:        @text;
 }
 
-/* ── Window ───────────────────────────────────────────────── */
-
 window {
     background-color:  @base;
     border:            1px solid;
     border-color:      @overlay;
-    border-radius:     12px;
+    border-radius:     0px;
     padding:           12px;
-    width:             38%;
+    width:             36%;
     location:          center;
     anchor:            center;
 }
-
-/* ── Main layout ──────────────────────────────────────────── */
 
 mainbox {
     background-color:  transparent;
@@ -47,47 +38,37 @@ mainbox {
     children:          [ inputbar, listview ];
 }
 
-/* ── Search bar ───────────────────────────────────────────── */
-
 inputbar {
     background-color:  @surface;
     border:            1px solid;
     border-color:      @overlay;
-    border-radius:     8px;
-    padding:           10px 14px;
+    border-radius:     999px;
+    padding:           10px 18px;
     spacing:           10px;
     children:          [ entry ];
-}
-
-prompt {
-    background-color:  transparent;
-    text-color:        @foam;
-    font:              "JetBrainsMono Nerd Font 13";
 }
 
 entry {
     background-color:  transparent;
     text-color:        @text;
-    placeholder:       "Search applications...";
+    placeholder:       "Search...";
     placeholder-color: @muted;
     cursor:            text;
 }
 
-/* ── Results list ─────────────────────────────────────────── */
-
 listview {
     background-color:  transparent;
     columns:           1;
-    lines:             8;
-    spacing:           3px;
+    lines:             10;
+    spacing:           2px;
     scrollbar:         false;
     fixed-height:      false;
 }
 
 element {
     background-color:  transparent;
-    border-radius:     6px;
-    padding:           8px 10px;
+    border-radius:     999px;
+    padding:           7px 14px;
     spacing:           10px;
     children:          [ element-icon, element-text ];
 }
@@ -95,6 +76,7 @@ element {
 element-icon {
     background-color:  transparent;
     size:              22px;
+    border-radius:     999px;
 }
 
 element-text {
@@ -104,7 +86,7 @@ element-text {
     vertical-align:    0.5;
 }
 
-/* unselected normal */
+/* normal */
 element normal.normal {
     background-color:  transparent;
 }
@@ -112,67 +94,59 @@ element normal.normal element-text {
     text-color:        @subtle;
 }
 
-/* selected — GitPeak card style with teal glow */
+/* selected — teal orbit glow */
 element selected.normal {
     background-color:  rgba(156, 207, 216, 0.08);
     border:            1px solid;
-    border-color:      rgba(156, 207, 216, 0.25);
+    border-color:      rgba(156, 207, 216, 0.22);
 }
 element selected.normal element-text {
     text-color:        @text;
 }
 
-/* active (app already running) */
+/* active — section headers (muted, no highlight) */
 element normal.active {
     background-color:  transparent;
 }
 element normal.active element-text {
-    text-color:        @gold;
+    text-color:        @muted;
+    font:              "JetBrainsMono Nerd Font 9";
 }
-
 element selected.active {
-    background-color:  rgba(246, 193, 119, 0.08);
-    border:            1px solid;
-    border-color:      rgba(246, 193, 119, 0.25);
+    background-color:  transparent;
+    border:            none;
 }
 element selected.active element-text {
-    text-color:        @gold;
+    text-color:        @muted;
+    font:              "JetBrainsMono Nerd Font 9";
 }
 
-/* urgent */
-element normal.urgent {
-    background-color:  transparent;
-}
+/* urgent — rose */
 element normal.urgent element-text {
     text-color:        @love;
 }
-
 element selected.urgent {
     background-color:  rgba(235, 111, 146, 0.08);
     border:            1px solid;
-    border-color:      rgba(235, 111, 146, 0.25);
+    border-color:      rgba(235, 111, 146, 0.22);
 }
 element selected.urgent element-text {
     text-color:        @love;
 }
 
-/* ── Scrollbar ────────────────────────────────────────────── */
-
 scrollbar {
     background-color:  @surface;
     handle-color:      @highlight-med;
     handle-width:      4px;
-    border-radius:     4px;
+    border-radius:     999px;
 }
-
-/* ── Message ──────────────────────────────────────────────── */
 
 message {
     background-color:  @surface;
     border:            1px solid;
     border-color:      @overlay;
-    border-radius:     6px;
-    padding:           8px 12px;
+    border-radius:     12px;
+    padding:           8px 16px;
 }
 
 textbox {
