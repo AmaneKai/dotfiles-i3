@@ -42,7 +42,7 @@ client.urgent           $rose-pine-base     $rose-pine-base     $rose-pine-text 
 
 set $terminal ghostty
 set $fileManager pcmanfm
-set $menu rofi -show drun -theme ~/.config/rofi/rose-pine.rasi
+set $menu rofi -show drun -show-icons -theme ~/.config/rofi/rose-pine.rasi
 
 # ============================================================================
 # AUTOSTART APPLICATIONS
