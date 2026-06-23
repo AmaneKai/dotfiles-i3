@@ -21,7 +21,7 @@ for_window [class=".*"] border pixel 1
 default_border pixel 1
 default_floating_border pixel 1
 
-# Gaps (disabled for edge-to-edge windows)
+# Gaps
 gaps inner 0
 gaps outer 0
 
@@ -30,16 +30,11 @@ set $rose-pine-base #191724
 set $rose-pine-text #e0def4
 
 # Window Colors (uniform dark borders)
-# class                 border              background          text
-# indicator           child_border
-client.focused          $rose-pine-base     $rose-pine-base     \
-$rose-pine-text     $rose-pine-base     $rose-pine-base
-client.focused_inactive $rose-pine-base     $rose-pine-base     \
-$rose-pine-text     $rose-pine-base     $rose-pine-base
-client.unfocused        $rose-pine-base     $rose-pine-base     \
-$rose-pine-text     $rose-pine-base     $rose-pine-base
-client.urgent           $rose-pine-base     $rose-pine-base     \
-$rose-pine-text     $rose-pine-base     $rose-pine-base
+# class                 border              background          text                indicator           child_border
+client.focused          $rose-pine-base     $rose-pine-base     $rose-pine-text     $rose-pine-base     $rose-pine-base
+client.focused_inactive $rose-pine-base     $rose-pine-base     $rose-pine-text     $rose-pine-base     $rose-pine-base
+client.unfocused        $rose-pine-base     $rose-pine-base     $rose-pine-text     $rose-pine-base     $rose-pine-base
+client.urgent           $rose-pine-base     $rose-pine-base     $rose-pine-text     $rose-pine-base     $rose-pine-base
 
 # ============================================================================
 # APPLICATION DEFINITIONS
@@ -67,8 +62,7 @@ exec_always --no-startup-id autotiling
 exec --no-startup-id nm-applet
 exec --no-startup-id dex --autostart --environment i3
 exec --no-startup-id dunst
-exec --no-startup-id xss-lock --transfer-sleep-lock -- \
-    ~/bin/lock.sh --nofork
+exec --no-startup-id xss-lock --transfer-sleep-lock -- ~/bin/lock.sh --nofork
 
 # ============================================================================
 # KEYBINDINGS - GENERAL
@@ -92,24 +86,24 @@ bindsym $mod+u exec ~/bin/lock.sh
 # KEYBINDINGS - SCREENSHOTS
 # ============================================================================
 
-bindsym Print exec scrot '%Y-%m-%d-%s_screenshot.png' \
-    -e 'mv $f ~/Pictures/'
-bindsym $mod+Print exec scrot -s '%Y-%m-%d-%s_screenshot.png' \
-    -e 'mv $f ~/Pictures/'
+# Fullscreen to clipboard
+bindsym Print exec --no-startup-id maim | xclip -selection clipboard -t image/png
+
+# Region select to clipboard
+bindsym $mod+Shift+s exec --no-startup-id maim -s | xclip -selection clipboard -t image/png
+
+# Region select to file
+bindsym $mod+Print exec --no-startup-id maim -s ~/Pictures/screenshot-$(date +%Y%m%d-%H%M%S).png
 
 # ============================================================================
 # KEYBINDINGS - AUDIO & BRIGHTNESS
 # ============================================================================
 
 # Volume Control
-bindsym XF86AudioRaiseVolume exec \
-    wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+
-bindsym XF86AudioLowerVolume exec \
-    wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
-bindsym XF86AudioMute exec \
-    wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
-bindsym XF86AudioMicMute exec \
-    wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
+bindsym XF86AudioRaiseVolume exec wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+
+bindsym XF86AudioLowerVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
+bindsym XF86AudioMute exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+bindsym XF86AudioMicMute exec wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
 
 # Brightness Control
 bindsym XF86MonBrightnessUp exec brightnessctl set +10%
@@ -117,12 +111,9 @@ bindsym XF86MonBrightnessDown exec brightnessctl set 10%-
 
 # Audio Device Switching
 bindsym $mod+Shift+a exec pavucontrol
-bindsym $mod+Shift+f exec \
-    ~/.config/i3/scripts/audio-switch.sh fifine
-bindsym $mod+Shift+b exec \
-    ~/.config/i3/scripts/audio-switch.sh airpods
-bindsym $mod+Shift+t exec \
-    ~/.config/i3/scripts/audio-switch.sh toggle
+bindsym $mod+Shift+f exec ~/.config/i3/scripts/audio-switch.sh fifine
+bindsym $mod+Shift+b exec ~/.config/i3/scripts/audio-switch.sh airpods
+bindsym $mod+Shift+t exec ~/.config/i3/scripts/audio-switch.sh toggle
 
 # ============================================================================
 # KEYBINDINGS - WINDOW MOVEMENT (VIM STYLE)
@@ -174,8 +165,7 @@ bindsym $mod+Shift+0 move container to workspace 10
 
 bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
-bindsym $mod+Shift+e exec \
-    "i3-nagbar -t warning -m 'Exit i3?' -B 'Yes' 'i3-msg exit'"
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'Exit i3?' -B 'Yes' 'i3-msg exit'"
 
 # ============================================================================
 # MODES
@@ -197,8 +187,6 @@ bindsym $mod+r mode "resize"
 # ============================================================================
 
 # 2x2 Grid Layout
-bindsym $mod+Shift+g exec --no-startup-id \
-    "i3-msg 'workspace 1; \
-    append_layout ~/.config/i3/layouts/grid-2x2.json'"
+bindsym $mod+Shift+g exec --no-startup-id "i3-msg 'workspace 1; append_layout ~/.config/i3/layouts/grid-2x2.json'"
 
 # vim:ft=i3config
