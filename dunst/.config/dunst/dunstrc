@@ -1,53 +1,59 @@
 [global]
-    font = JetBrains Mono 10
-    frame_color = "#ebbcba"
-    separator_color = frame
-    sort = yes
-    indicate_hidden = yes
-    alignment = left
-    bounce_freq = 0
-    show_age_threshold = 60
-    word_wrap = yes
-    ignore_newline = no
-    transparency = 10
-    idle_threshold = 120
-    monitor = 0
-    follow = keyboard
-    sticky_history = yes
-    history_length = 20
-    show_indicators = yes
+    font                 = JetBrainsMono Nerd Font 10
+    markup               = full
+    format               = "<b>%s</b>\n<span alpha='80%%'>%b</span>"
+
+    # Pill shape
+    corner_radius        = 14
+    icon_corner_radius   = 100
+    gap_size             = 8
+    frame_width          = 0
+
+    # Position
+    origin               = top-right
+    offset               = 20x20
+    width                = (0, 360)
+    height               = (0, 200)
+    padding              = 14
+    horizontal_padding   = 18
+    text_icon_padding    = 12
+
+    # Icons
+    min_icon_size        = 32
+    max_icon_size        = 32
+    icon_path            = /usr/share/icons/Papirus-Dark/32x32/
+
+    # Behavior
+    sort                 = yes
+    indicate_hidden      = yes
+    show_age_threshold   = 60
+    word_wrap            = yes
+    ignore_newline       = no
+    sticky_history       = yes
+    history_length       = 20
+    show_indicators      = no
+    follow               = keyboard
 
 [urgency_low]
-    background = "#191724"
-    foreground = "#e0def4"
-    frame_color = "#31748f"
-    timeout = 4
-    highlight = "#9ccfd8"
+    background           = "#1f1d2e"
+    foreground           = "#e0def4"
+    format               = "<span foreground='#9ccfd8'>●</span>  <b>%s</b>\n<span alpha='75%%'>%b</span>"
+    timeout              = 4
 
 [urgency_normal]
-    background = "#1f1d2e"
-    foreground = "#e0def4"
-    frame_color = "#c4a7e7"
-    timeout = 6
-    highlight = "#f6c177"
+    background           = "#1f1d2e"
+    foreground           = "#e0def4"
+    format               = "<span foreground='#c4a7e7'>●</span>  <b>%s</b>\n<span alpha='75%%'>%b</span>"
+    timeout              = 6
 
 [urgency_critical]
-    background = "#26233a"
-    foreground = "#e0def4"
-    frame_color = "#eb6f92"
-    timeout = 0
-    highlight = "#eb6f92"
-
-# position and size
-[geometry]
-    geometry = "300x60-20+20"
-    padding = 10
-    horizontal_padding = 10
-    frame_width = 2
+    background           = "#26233a"
+    foreground           = "#e0def4"
+    format               = "<span foreground='#eb6f92'>●</span>  <b>%s</b>\n<span alpha='75%%'>%b</span>"
+    timeout              = 0
 
 [shortcuts]
-    close = ctrl+space
-    close_all = ctrl+shift+space
-    history = ctrl+grave
-    context = ctrl+shift+period
-
+    close                = ctrl+space
+    close_all            = ctrl+shift+space
+    history              = ctrl+grave
+    context              = ctrl+shift+period
