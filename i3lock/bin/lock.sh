@@ -1,10 +1,14 @@
 #!/usr/bin/env bash
-LOCK_IMG="/tmp/lock_final.png"
 
-python3 ~/.config/i3/scripts/lock-gen.py "$LOCK_IMG"
+readonly LOCK_IMAGE="/tmp/lock_screen.png"
+readonly LOCK_GENERATOR="$HOME/.config/i3/scripts/lock-gen.py"
+
+[ ! -f "$LOCK_GENERATOR" ] && notify-send "Lock" "Lock screen generator not found" && exit 1
+
+python3 "$LOCK_GENERATOR" "$LOCK_IMAGE"
 
 i3lock \
-  --image "$LOCK_IMG" \
+  --image "$LOCK_IMAGE" \
   --clock \
   --time-str="%H:%M" \
   --date-str="%A, %B %d" \
@@ -27,12 +31,11 @@ i3lock \
   --verif-color=c4a7e7ff \
   --wrong-color=eb6f92ff \
   --verif-text="..." \
-  --wrong-text="×" \
+  --wrong-text="x" \
   --verif-font="JetBrainsMono Nerd Font" \
   --wrong-font="JetBrainsMono Nerd Font" \
   --radius=95 \
   --ring-width=5 \
-  --indicator \
-  --nofork
+  --indicator
 
-rm -f "$LOCK_IMG"
+rm -f "$LOCK_IMAGE"

@@ -1,12 +1,34 @@
 #!/usr/bin/env bash
 
-killall -q polybar
-while pgrep -u "$UID" -x polybar >/dev/null; do sleep 1; done
+readonly POLYBAR_CONFIG="$HOME/.config/polybar/config.ini"
+readonly LAPTOP_OUTPUT="eDP"
 
-CFG="/home/amane/.dotfiles-i3/polybar/.config/polybar/config.ini"
+kill_existing_polybar() {
+  killall -q polybar
+  while pgrep -u "$UID" -x polybar > /dev/null
+    do sleep 1
+  done
+}
 
-if xrandr --query | grep -q "HDMI-A-0 connected [0-9]"; then
-    MONITOR=HDMI-A-0 polybar --config="$CFG" monitor &
-else
-    MONITOR=eDP polybar --config="$CFG" laptop &
-fi
+find_active_external_output() {
+  xrandr --query \
+    | grep " connected [0-9]" \
+    | awk '{print $1}' \
+    | grep -v "^${LAPTOP_OUTPUT}$" \
+    | head -1
+}
+
+launch_polybar() {
+  local active_external_output
+  active_external_output=$(find_active_external_output)
+
+  if [ -n "$active_external_output" ]
+    then MONITOR="$active_external_output" polybar --config="$POLYBAR_CONFIG" monitor &
+    return
+  fi
+
+  MONITOR="$LAPTOP_OUTPUT" polybar --config="$POLYBAR_CONFIG" laptop &
+}
+
+kill_existing_polybar
+launch_polybar

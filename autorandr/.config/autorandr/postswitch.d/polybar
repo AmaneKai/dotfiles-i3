@@ -1,2 +1,7 @@
 #!/usr/bin/env bash
-bash /home/amane/.dotfiles-i3/polybar/.config/polybar/launch.sh
+
+readonly LAUNCH_SCRIPT="$HOME/.config/polybar/launch.sh"
+
+[ ! -x "$LAUNCH_SCRIPT" ] && exit 1
+
+bash "$LAUNCH_SCRIPT"
