@@ -49,7 +49,7 @@ set $menu rofi -show drun -show-icons -theme ~/.config/rofi/rose-pine.rasi
 # ============================================================================
 
 # Hardware Configuration
-exec --no-startup-id "sleep 2 && autorandr --change --default desk"
+exec --no-startup-id "sleep 2 && autorandr --change --default laptop"
 exec --no-startup-id rfkill unblock bluetooth
 
 # Visual Elements
